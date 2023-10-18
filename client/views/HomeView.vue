@@ -3,6 +3,7 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
+import Gallery from "@/components/Gallery/Gallery.vue";
 import LogoutButton from "@/components/Logout/LogoutButton.vue";
 import Modal from '@/components/UtilComponents/Modal.vue';
 
@@ -33,7 +34,7 @@ async function closeModal() {
       class="btn"
       v-on:click="showModal"
       >
-        Open Modal!
+       <img src="../assets/images/imagesIcon.svg" alt="Bootstrap" width="15" height="15"> Open Gallery!
       </button>
 
       <Modal
@@ -42,11 +43,11 @@ async function closeModal() {
       >
       
         <template v-slot:header>
-          This is a new modal header.
+          Gallery
         </template>
 
         <template v-slot:body>
-          This is a new modal body.
+          <Gallery v-for = "galleryName in [{galleryName: 'Audio'}, {galleryName: 'Video'}]" v-bind="galleryName"/>
         </template>
 
         <template v-slot:footer>

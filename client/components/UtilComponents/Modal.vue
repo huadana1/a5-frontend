@@ -1,10 +1,11 @@
+<!-- adapted from https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component 10/17/23-->
 <script setup lang="ts">
-  import { defineEmits } from 'vue';
-  const emit = defineEmits(['closedModal']);
+import { defineEmits } from 'vue';
+const emit = defineEmits(['closedModal']);
 
-  async function close() {
-    emit("closedModal")
-  }
+async function close() {
+  emit("closedModal")
+}
 </script>
 
 <template>

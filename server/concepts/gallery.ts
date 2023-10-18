@@ -37,7 +37,8 @@ export default class GalleryConcept {
     const gallery = await this.getGalleryByName(user, galleryName);
 
     if (gallery == null) {
-      throw new NotFoundError("Gallery {0} could not be found", galleryName);
+      // throw new NotFoundError("Gallery {0} could not be found", galleryName);
+      return [];
     }
 
     const items = await this.galleryItems.readMany({ gallery: gallery._id });
