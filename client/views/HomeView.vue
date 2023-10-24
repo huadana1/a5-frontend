@@ -1,24 +1,13 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
 
 import Gallery from "@/components/Gallery/Gallery.vue";
 import LogoutButton from "@/components/Logout/LogoutButton.vue";
-import Modal from '@/components/UtilComponents/Modal.vue';
 import Inbox from "../components/Chat/Inbox.vue";
 import AddFriend from "../components/Friend/AddFriend.vue";
 
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
-const isModalVisible = ref(false)
-
-async function showModal() {
-  isModalVisible.value = true
-}
-
-async function closeModal() {
-  isModalVisible.value = false
-}
 </script>
 
 <template>
@@ -33,31 +22,10 @@ async function closeModal() {
     <!-- left panel -->
     <section class="left-panel">
       <!-- gallery button -->
-      <button type="button" class="btn" v-on:click="showModal">
-        <img src="../assets/images/imagesIcon.svg" alt="Bootstrap" width="15" height="15"> Open Gallery!
-      </button>
+      <Gallery/>
 
-      <Modal
-        v-show="isModalVisible"
-        v-on:closed-modal="closeModal"
-      >
-      
-        <template v-slot:header>
-          Gallery
-        </template>
-
-        <template v-slot:body>
-          <Gallery v-for = "galleryName in [{galleryName: 'Audio'}, {galleryName: 'Video'}]" v-bind="galleryName"/>
-        </template>
-
-        <template v-slot:footer>
-          This is a new modal footer.
-        </template>
-
-      </Modal>
-
-      <AddFriend></AddFriend>
-      <Inbox></Inbox>
+      <AddFriend/>
+      <Inbox/>
     </section>
 
     <!-- basically just the chat window -->
