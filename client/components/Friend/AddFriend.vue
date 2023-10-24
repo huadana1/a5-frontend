@@ -4,6 +4,8 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 import Modal from "../UtilComponents/Modal.vue";
+import NewAudioMessageButton from "../UtilComponents/NewAudioMessageButton.vue";
+import NewVideoMessageButton from "../UtilComponents/NewVideoMessageButton.vue";
 import SearchFriend from "./SearchFriend.vue";
 
 const { logoutUser, updateSession } = useUserStore();

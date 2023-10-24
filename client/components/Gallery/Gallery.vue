@@ -32,9 +32,5 @@ isModalVisible.value = false
           <GalleryModalContent v-for = "galleryName in [{galleryName: 'Audio'}, {galleryName: 'Video'}]" v-bind="galleryName"/>
         </template>
 
-        <template v-slot:footer>
-          This is a new modal footer.
-        </template>
-
       </Modal>
 </template>

@@ -22,12 +22,11 @@ function openChat(user: string) {
 
 <template>
   <main>
-    <h1>Home Page</h1>
-    <section>
+    <!-- <h1>Home Page</h1> -->
+    <!-- <section>
       <h1 v-if="isLoggedIn">Welcome {{ currentUsername }}!</h1>
       <h1 v-else>Please login!</h1>
-      <LogoutButton v-if="isLoggedIn"/>
-    </section>
+    </section> -->
 
     <!-- left panel -->
     <section class="left-panel">
@@ -36,6 +35,7 @@ function openChat(user: string) {
 
       <AddFriend/>
       <Inbox @open-chat="openChat"/>
+      <LogoutButton v-if="isLoggedIn"/>
     </section>
 
     <!-- basically just the chat window -->
@@ -50,5 +50,43 @@ function openChat(user: string) {
 <style scoped>
 h1 {
   text-align: center;
+}
+
+main {
+  margin: 0;
+  height: 100vh;
+  width: 100vh;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-panel {
+  margin: 0;
+  padding: 8px;
+  width: 45%;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: lightgray;
+}
+
+.right-panel {
+  margin: 0;
+  padding: 8px;
+  width: 55%;
+  height: 100vh;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

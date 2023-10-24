@@ -44,7 +44,6 @@ async function close() {
 
         <footer class="modal-footer">
           <slot name="footer">
-            This is the default footer!
           </slot>
           <button
             type="button"
@@ -52,7 +51,7 @@ async function close() {
             v-on:click="close"
             aria-label="Close modal"
           >
-            Close me!
+            Close!
           </button>
         </footer>
       </div>
