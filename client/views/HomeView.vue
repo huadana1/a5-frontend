@@ -6,6 +6,8 @@ import { ref } from "vue";
 import Gallery from "@/components/Gallery/Gallery.vue";
 import LogoutButton from "@/components/Logout/LogoutButton.vue";
 import Modal from '@/components/UtilComponents/Modal.vue';
+import Inbox from "../components/Chat/Inbox.vue";
+import AddFriend from "../components/Friend/AddFriend.vue";
 
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 const isModalVisible = ref(false)
@@ -27,6 +29,7 @@ async function closeModal() {
       <h1 v-else>Please login!</h1>
       <LogoutButton v-if="isLoggedIn"/>
     </section>
+
     <!-- <PostListComponent /> -->
     <section>
       <button
@@ -56,6 +59,13 @@ async function closeModal() {
 
       </Modal>
     </section>
+
+    <section>
+      <AddFriend></AddFriend>
+      <Inbox></Inbox>
+    </section>
+
+
   </main>
 </template>
 
