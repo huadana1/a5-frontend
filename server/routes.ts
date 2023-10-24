@@ -133,7 +133,7 @@ class Routes {
       throw new FriendNotFoundError(user, u2Id);
     }
 
-    return await Chat.getAllMessages(user, u2Id);
+    return await Responses.privateMessageChatMessages(await Chat.getAllMessages(user, u2Id));
   }
 
   // get the available chats, NOT getting the message

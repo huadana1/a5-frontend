@@ -46,7 +46,7 @@ onBeforeMount(async () => {
 
     <!-- old messages -->
     <section class="old-messages">
-        <p v-if="loaded" v-for="message in messages"> {{ message }}</p>
+        <p v-if="loaded" v-for="message in messages" :class="{from: message.from == currentUsername, to: message.from != currentUsername}"> {{ message.message }}</p>
         <p v-else-if="!props.user2">No chat selected</p>
         <p v-else>Loading...</p>
     </section>
@@ -58,3 +58,12 @@ onBeforeMount(async () => {
         <Gallery/>
     </section>
 </template>
+
+<style scoped>
+.from {
+    color: red;
+}
+.to {
+    color: blue;
+}
+</style>
