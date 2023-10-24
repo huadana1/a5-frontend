@@ -30,14 +30,11 @@ async function closeModal() {
       <LogoutButton v-if="isLoggedIn"/>
     </section>
 
-    <!-- <PostListComponent /> -->
-    <section>
-      <button
-      type="button"
-      class="btn"
-      v-on:click="showModal"
-      >
-       <img src="../assets/images/imagesIcon.svg" alt="Bootstrap" width="15" height="15"> Open Gallery!
+    <!-- left panel -->
+    <section class="left-panel">
+      <!-- gallery button -->
+      <button type="button" class="btn" v-on:click="showModal">
+        <img src="../assets/images/imagesIcon.svg" alt="Bootstrap" width="15" height="15"> Open Gallery!
       </button>
 
       <Modal
@@ -58,11 +55,14 @@ async function closeModal() {
         </template>
 
       </Modal>
-    </section>
 
-    <section>
       <AddFriend></AddFriend>
       <Inbox></Inbox>
+    </section>
+
+    <!-- basically just the chat window -->
+    <section class="right-panel">
+      
     </section>
 
 
