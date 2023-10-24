@@ -39,13 +39,17 @@ async function checkValidNewFriend(username: string) {
     // must not already be friends
     // must not already have sent a request
     const friends = await fetchy("/api/friends", "GET", {})
-    const friendRequestes = await fetchy("/api/friend/requests", "GET", {})
+    const friendRequests = await fetchy("/api/friend/requests", "GET", {}).then((friendRequestData: any[]) => friendRequestData.reduce((reqs: string[], requestedFriend: any) => {
+      return [...reqs, requestedFriend.to, requestedFriend.from]
+    }, []))
 
-    if (username in friends) {
+    console.log(username, friends, friendRequests)
+
+    if (friends.includes(username)) {
       console.log("you are already friends with ", username);
       isValidNewFriend.value = false;
     }
-    else if (username in friendRequestes) {
+    else if (friendRequests.includes(username)) {
       console.log("you already sent a friend request to ", username);
       isValidNewFriend.value = false;
     }
