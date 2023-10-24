@@ -140,7 +140,7 @@ class Routes {
   @Router.get("/chats")
   async getAllChats(session: WebSessionDoc) {
     const user = WebSession.getUser(session);
-    return await Chat.getAllChats(user);
+    return await Responses.privateMessageChats(await Chat.getAllChats(user));
   }
 
   @Router.post("/chats/chat/:to")

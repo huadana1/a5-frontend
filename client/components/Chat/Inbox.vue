@@ -4,7 +4,7 @@ import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, ref } from "vue";
 
-const { isLoggedIn } = storeToRefs(useUserStore());
+const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 
 const loaded = ref(false);
 const emit = defineEmits(["openChat"]);
@@ -38,6 +38,7 @@ onBeforeMount(async () => {
     <section v-if="loaded">
         <button v-for="chat in inbox" v-on:click="openSelectedChat">
             <SingleChatInbox :chat="chat" :value="chat"/>
+            {{chat.user1 == currentUsername ? chat.user2 : chat.user1}}
         </button>
     </section>
 </template>

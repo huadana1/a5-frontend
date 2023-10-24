@@ -1,6 +1,7 @@
 import { User } from "./app";
 import { AlreadyFriendsError, FriendNotFoundError, FriendRequestAlreadyExistsError, FriendRequestDoc, FriendRequestNotFoundError } from "./concepts/friend";
 import { PostAuthorNotMatchError, PostDoc } from "./concepts/post";
+import { PrivateMessageChatDoc } from "./concepts/privatemessagechat";
 import { Router } from "./framework/router";
 
 /**
@@ -36,6 +37,17 @@ export default class Responses {
     const to = requests.map((request) => request.to);
     const usernames = await User.idsToUsernames(from.concat(to));
     return requests.map((request, i) => ({ ...request, from: usernames[i], to: usernames[i + requests.length] }));
+  }
+
+  /**
+   * Convert PrivateMessageChatDoc into more readable format for the frontend
+   * by converting the ids into usernames.
+   */
+  static async privateMessageChats(chats: PrivateMessageChatDoc[]) {
+    const user1 = chats.map((chat) => chat.user1);
+    const user2 = chats.map((chat) => chat.user2);
+    const usernames = await User.idsToUsernames(user1.concat(user2));
+    return chats.map((chat, i) => ({ ...chat, user1: usernames[i], user2: usernames[i + chats.length] }));
   }
 }
 
