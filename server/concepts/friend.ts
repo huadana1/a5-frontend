@@ -82,6 +82,19 @@ export default class FriendConcept {
     return false;
   }
 
+  async isRequestedFriend(u1: ObjectId, u2: ObjectId) {
+    const friendship = await this.requests.readOne({
+      $or: [
+        { to: u1, from: u2 },
+        { to: u2, from: u1 },
+      ],
+    });
+    if (friendship !== null || u1.toString() === u2.toString()) {
+      return true;
+    }
+    return false;
+  }
+
   private async addFriend(user1: ObjectId, user2: ObjectId) {
     void this.friends.createOne({ user1, user2 });
   }

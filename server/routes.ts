@@ -129,7 +129,7 @@ class Routes {
     const user = WebSession.getUser(session);
     const u2Id = (await User.getUserByUsername(username))._id;
 
-    if (!(await Friend.isFriends(user, u2Id))) {
+    if (!((await Friend.isFriends(user, u2Id)) || (await Friend.isRequestedFriend(user, u2Id)))) {
       throw new FriendNotFoundError(user, u2Id);
     }
 

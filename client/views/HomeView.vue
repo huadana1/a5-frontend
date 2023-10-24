@@ -1,13 +1,23 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
+import { ref } from "vue";
+
 
 import Gallery from "@/components/Gallery/Gallery.vue";
 import LogoutButton from "@/components/Logout/LogoutButton.vue";
 import Inbox from "../components/Chat/Inbox.vue";
+import MessagingWindow from "../components/Chat/MessagingWindow.vue";
 import AddFriend from "../components/Friend/AddFriend.vue";
 
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
+const chattingWith = ref('')
+
+function openChat(user: string) {
+  console.log(user)
+  chattingWith.value = user;
+}
+
 </script>
 
 <template>
@@ -25,12 +35,12 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
       <Gallery/>
 
       <AddFriend/>
-      <Inbox/>
+      <Inbox @open-chat="openChat"/>
     </section>
 
     <!-- basically just the chat window -->
     <section class="right-panel">
-      
+      <MessagingWindow :user2="chattingWith"/>
     </section>
 
 
