@@ -3,6 +3,7 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
+
 import Modal from "../UtilComponents/Modal.vue";
 import NewAudioMessageButton from "../UtilComponents/NewAudioMessageButton.vue";
 import NewVideoMessageButton from "../UtilComponents/NewVideoMessageButton.vue";
@@ -15,6 +16,7 @@ const isModalVisible = ref(false)
 const isValidNewFriend = ref(false)
 const messageType = ref('')
 const message = ref('')
+const friendToAdd = ref('')
 
 async function showModal() {
   isModalVisible.value = true
@@ -54,13 +56,16 @@ async function checkValidNewFriend(username: string) {
     if (friends.includes(username)) {
       console.log("you are already friends with ", username);
       isValidNewFriend.value = false;
+      friendToAdd.value = ""
     }
     else if (friendRequests.includes(username)) {
       console.log("you already sent a friend request to ", username);
       isValidNewFriend.value = false;
+      friendToAdd.value = ""
     }
     else {
       isValidNewFriend.value = true;
+      friendToAdd.value = username;
     }
   }
 }
@@ -70,7 +75,18 @@ function handleMessageUploaded(messageLink: string, type: "Video" | "Audio") {
   message.value = messageLink;
 }
 
-async function addFriend(username: string) {
+async function addFriend() {
+  console.log('adding friend!', friendToAdd.value)
+
+  try {
+    await fetchy(`/api/friend/requests/${friendToAdd.value}`, "POST", {
+      body: { to: friendToAdd.value, message: message.value, messageType: messageType.value },
+    });
+  } catch (_) {
+    return;
+  }
+
+  console.log('added frined!')
 }
 </script>
 
@@ -104,7 +120,7 @@ async function addFriend(username: string) {
             </audio>
 
             <!-- TODO: only show if message was recorded -->
-            <button v-if="message" type="submit" class="pure-button-primary pure-button">
+            <button v-if="message" type="submit" class="pure-button-primary pure-button" @click="addFriend">
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
               </svg>
