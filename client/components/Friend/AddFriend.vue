@@ -13,13 +13,18 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 
 const isModalVisible = ref(false)
 const isValidNewFriend = ref(false)
+const messageType = ref('')
+const message = ref('')
 
 async function showModal() {
   isModalVisible.value = true
 }
 
 async function closeModal() {
-  isModalVisible.value = false
+  isModalVisible.value = false;
+  isValidNewFriend.value = false;
+  messageType.value = "";
+  message.value = "";
 }
 
 async function checkValidNewFriend(username: string) {
@@ -61,6 +66,11 @@ async function checkValidNewFriend(username: string) {
   }
 }
 
+function handleMessageUploaded(messageLink: string, type: "Video" | "Audio") {
+  messageType.value = type;
+  message.value = messageLink;
+}
+
 async function addFriend(username: string) {
 }
 </script>
@@ -83,18 +93,22 @@ async function addFriend(username: string) {
           <SearchFriend @search-user="checkValidNewFriend"/>
 
           <template v-if="isValidNewFriend">
-            <NewAudioMessageButton/>
-            <NewVideoMessageButton/>
+            <NewAudioMessageButton v-on:message-uploaded="handleMessageUploaded"/>
+            <NewVideoMessageButton v-on:message-uploaded="handleMessageUploaded"/>
             <p>Say hello to your new friend!</p>
 
             <!-- TODO: something something template with the message -->
+            <iframe v-if="messageType == 'Video'" width="420" height="315" :src="message"></iframe>
+            <audio controls v-if="messageType == 'Audio'">
+              <source :src="message" type="audio/mpeg">
+              Your browser does not support the audio tag.
+            </audio>
 
             <!-- TODO: only show if message was recorded -->
-            <button type="submit" class="pure-button-primary pure-button">
+            <button v-if="message" type="submit" class="pure-button-primary pure-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
               </svg>
-
               Add friend and start new chat</button>
           </template>
         

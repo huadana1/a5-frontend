@@ -3,13 +3,27 @@ import Modal from '@/components/UtilComponents/Modal.vue';
 import { ref } from "vue";
 
 const isModalVisible = ref(false)
+const audioLink = ref("")
+const audioInput = ref()
+const emit = defineEmits(["messageUploaded"]);
 
 async function showModal() {
     isModalVisible.value = true
 }
 
 async function closeModal() {
-    isModalVisible.value = false
+    isModalVisible.value = false;
+    audioLink.value = "";
+}
+
+function updateAudioLink() {
+    audioLink.value = audioInput.value.value
+    console.log(audioLink.value)
+}
+
+async function useAudioMessage() {
+    emit("messageUploaded", audioLink.value, "Audio");
+    await closeModal();
 }
 </script>
 
@@ -31,10 +45,31 @@ async function closeModal() {
         </template>
 
         <template v-slot:body>
-          <audio controls>
-            <source src="https://mcdn.podbean.com/mf/web/ksp8jy/Kirby_Smash_Bros_Melee_Tauntb9bqx.mp3" type="audio/mpeg">
-  Your browser does not support the audio tag.
-          </audio>
+            <input
+                class="input"
+                type="text"
+                placeholder="https://mcdn.podbean.com/mf/web/ksp8jy/Kirby_Smash_Bros_Melee_Tauntb9bqx.mp3"
+                ref="audioInput"
+            />
+
+            <button @click="updateAudioLink">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                </svg>
+            </button>
+
+            <audio v-if="audioLink" controls>
+                <source :src="audioLink">
+                Your browser does not support the audio tag.
+            </audio>
+
+            <button  v-if="audioLink" type="submit" class="pure-button-primary pure-button" @click="useAudioMessage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                </svg>
+                Use this audio
+            </button>
         </template>
 
       </Modal>

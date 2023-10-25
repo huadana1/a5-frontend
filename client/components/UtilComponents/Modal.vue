@@ -42,8 +42,8 @@ async function close() {
           </slot>
         </section>
 
-        <footer class="modal-footer">
-          <slot name="footer">
+        <!-- <footer class="modal-footer"> -->
+          <!-- <slot name="footer">
           </slot>
           <button
             type="button"
@@ -52,8 +52,8 @@ async function close() {
             aria-label="Close modal"
           >
             Close!
-          </button>
-        </footer>
+          </button> -->
+        <!-- </footer> -->
       </div>
     </div>
   </transition>
