@@ -2,13 +2,14 @@
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, onBeforeUpdate, onUpdated, ref } from "vue";
 
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 
 const loaded = ref(false);
 const emit = defineEmits(["openChat"]);
 let inbox = ref<Array<Record<string, string>>>([]);
+const intervalTimer = ref()
 
 async function getChats() {
     try {
@@ -29,6 +30,17 @@ onBeforeMount(async () => {
   await getChats();
   loaded.value = true;
 });
+
+onBeforeUpdate(() => {
+    clearInterval(intervalTimer.value);
+})
+
+onUpdated(async () => {
+    intervalTimer.value = setInterval(async () => {
+        await getChats(); 
+        console.log('getting chats')
+    }, 1000)
+})
 
 </script>
 
