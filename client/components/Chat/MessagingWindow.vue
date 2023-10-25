@@ -17,9 +17,18 @@ const intervalTimer = ref()
 async function getChatMessages(user: string) {
     try {
         messages.value = await fetchy(`/api/chats/chat/${user}`, "GET", {})
-        // messages.value = [{'item':'alkfj'}, {'item': 'akdjflak'}, {'item': 'cnalfj'}]
     }
     catch (_) {
+        return;
+    }
+}
+
+async function handleMessageUploaded(message: string, messageType: "Video" | "Audio") {
+    try {
+        await fetchy(`/api/chats/chat/${props.user2}`, "POST", {
+            body: { to: props.user2, message, messageType },
+        });
+    } catch (_) {
         return;
     }
 }
@@ -67,8 +76,8 @@ onUpdated(async () => {
 
     <!-- send a new message -->
     <section class="message-input">
-        <NewAudioMessageButton/>
-        <NewVideoMessageButton/>
+        <NewAudioMessageButton @message-uploaded="handleMessageUploaded"/>
+        <NewVideoMessageButton @message-uploaded="handleMessageUploaded"/>
         <Gallery/>
     </section>
 </template>

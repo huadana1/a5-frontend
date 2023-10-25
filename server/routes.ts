@@ -152,10 +152,6 @@ class Routes {
     const user = WebSession.getUser(session);
     const toId = (await User.getUserByUsername(to))._id;
 
-    if (!(await Friend.isFriends(user, toId))) {
-      throw new FriendNotFoundError(user, toId);
-    }
-
     const sentMessage = await Chat.sendMessage(user, toId, message);
     await Gallery.addItem(user, messageType, message);
 

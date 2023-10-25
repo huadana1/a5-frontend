@@ -5,6 +5,7 @@ import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
 export interface PrivateMessageChatDoc extends BaseDoc {
   user1: ObjectId;
   user2: ObjectId;
+  status: "pending" | "full"; // full means both users are friends and have accepted the chat
 }
 
 export interface PrivateMessageChatMessagesDoc extends BaseDoc {
@@ -85,6 +86,23 @@ export default class PrivateMessageChatConcept {
 
   /**
    *
+   * @param user1 - first user in chat
+   * @param user2 - second user in chat
+   * @returns true if there is a chat between user1 and user2, false otherwise
+   */
+  private async isFullChat(user1: ObjectId, user2: ObjectId) {
+    const chat = await this.chats.readOne({
+      $or: [
+        { user1: user1, user2: user2 },
+        { user1: user2, user2: user1 },
+      ],
+    });
+
+    return chat?.status == "full";
+  }
+
+  /**
+   *
    * @param user1 - id of the first user in the chat
    * @param user2 - id of the second user of the chat
    * @returns a new chat between user1 and user2 with the first message being message
@@ -94,7 +112,7 @@ export default class PrivateMessageChatConcept {
       throw new ChatAlreadyExistsError(user1, user2);
     }
 
-    const _id = await this.chats.createOne({ user1, user2 });
+    const _id = await this.chats.createOne({ user1, user2, status: "pending" });
     return { msg: "Chat successfully created!", chatId: _id };
   }
 
@@ -123,6 +141,10 @@ export default class PrivateMessageChatConcept {
     if (!(await this.isExistingChat(from, to))) {
       throw new ChatNotFoundError(from, to);
     }
+    // make sure chat is not a pending chat
+    if (!(await this.isFullChat(from, to))) {
+      throw new ChatIsPendingError();
+    }
 
     const _id = await this.messages.createOne({ from, to, message });
     return { msg: "Chat message sent!", sentMsgId: _id };
@@ -148,5 +170,10 @@ export class ChatAlreadyExistsError extends NotAllowedError {
     public readonly user2: ObjectId,
   ) {
     super("Chat between {0} and {1} already exists!", user1, user2);
+  }
+}
+export class ChatIsPendingError extends NotAllowedError {
+  constructor() {
+    super("You cannot send a message to this chat until the friend request is accepted!");
   }
 }
