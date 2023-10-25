@@ -27,6 +27,7 @@ async function closeModal() {
   isValidNewFriend.value = false;
   messageType.value = "";
   message.value = "";
+  friendToAdd.value = "";
 }
 
 async function checkValidNewFriend(username: string) {
@@ -51,8 +52,6 @@ async function checkValidNewFriend(username: string) {
       return [...reqs, requestedFriend.to, requestedFriend.from]
     }, []))
 
-    console.log(username, friends, friendRequests)
-
     if (friends.includes(username)) {
       console.log("you are already friends with ", username);
       isValidNewFriend.value = false;
@@ -73,20 +72,18 @@ async function checkValidNewFriend(username: string) {
 function handleMessageUploaded(messageLink: string, type: "Video" | "Audio") {
   messageType.value = type;
   message.value = messageLink;
+  console.log(message.value)
 }
 
 async function addFriend() {
-  console.log('adding friend!', friendToAdd.value)
-
   try {
     await fetchy(`/api/friend/requests/${friendToAdd.value}`, "POST", {
       body: { to: friendToAdd.value, message: message.value, messageType: messageType.value },
     });
+    closeModal();
   } catch (_) {
     return;
   }
-
-  console.log('added frined!')
 }
 </script>
 
@@ -112,14 +109,14 @@ async function addFriend() {
             <NewVideoMessageButton v-on:message-uploaded="handleMessageUploaded"/>
             <p>Say hello to your new friend!</p>
 
-            <!-- TODO: something something template with the message -->
+            <!-- render message -->
             <iframe v-if="messageType == 'Video'" width="420" height="315" :src="message"></iframe>
             <audio controls v-if="messageType == 'Audio'">
               <source :src="message" type="audio/mpeg">
               Your browser does not support the audio tag.
             </audio>
 
-            <!-- TODO: only show if message was recorded -->
+            <!-- submit message -->
             <button v-if="message" type="submit" class="pure-button-primary pure-button" @click="addFriend">
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>

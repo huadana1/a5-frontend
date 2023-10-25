@@ -19,7 +19,6 @@ async function getItems(galleryName: string) {
 
     try {
         galleryItems.value = await fetchy(`/api/galleries/gallery/${galleryName}`, "GET", {query})
-        galleryItems.value = [{'item':'alkfj'}, {'item': 'akdjflak'}, {'item': 'cnalfj'}]
     }
     catch (_) {
         return;

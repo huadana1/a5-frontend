@@ -18,6 +18,7 @@ async function closeModal() {
 
 function updateAudioLink() {
     audioLink.value = audioInput.value.value
+    console.log(audioLink.value)
 }
 
 async function useAudioMessage() {
@@ -59,7 +60,7 @@ async function useAudioMessage() {
             </button>
 
             <audio v-if="audioLink" controls>
-                <source :src="audioLink">
+                <source :src="audioLink" type="audio/mpeg">
                 Your browser does not support the audio tag.
             </audio>
 
