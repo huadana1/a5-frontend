@@ -6,11 +6,11 @@ import GalleryModalContent from './GalleryModalContent.vue';
 const isModalVisible = ref(false)
 
 async function showModal() {
-isModalVisible.value = true
+    isModalVisible.value = true
 }
 
 async function closeModal() {
-isModalVisible.value = false
+    isModalVisible.value = false
 }
 </script>
 
