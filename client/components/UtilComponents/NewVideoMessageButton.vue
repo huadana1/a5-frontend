@@ -32,7 +32,7 @@ async function closeModal() {
         <template v-slot:body>
           <!-- add body -->
             <iframe width="420" height="315"
-            src="https://youtu.be/FJrSNirYBwo">
+            src="https://www.dailymotion.com/embed/video/x8p1pev">
             </iframe>
         </template>
 
