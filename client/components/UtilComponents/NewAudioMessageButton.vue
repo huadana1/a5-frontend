@@ -18,7 +18,6 @@ async function closeModal() {
 
 function updateAudioLink() {
     audioLink.value = audioInput.value.value
-    console.log(audioLink.value)
 }
 
 async function useAudioMessage() {

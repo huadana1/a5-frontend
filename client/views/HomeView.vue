@@ -14,7 +14,6 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 const chattingWith = ref('')
 
 function openChat(user: string) {
-  console.log(user)
   chattingWith.value = user;
 }
 

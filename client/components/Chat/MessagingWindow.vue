@@ -25,7 +25,6 @@ async function getChatMessages(user: string) {
 
 watchEffect(async () => {
     // will log whenever the props change
-    console.log(props.user2)
     if (props.user2) {
         await getChatMessages(props.user2);
         loaded.value = true; 

@@ -37,7 +37,6 @@ async function checkValidNewFriend(username: string) {
   const query: Record<string, string> = {username}
   const user = await fetchy(`/api/users/${username}`, "GET", {query})
 
-  console.log(user)
   // user must exist
   if (!user) {
     console.log("username not found");

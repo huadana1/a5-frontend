@@ -14,7 +14,6 @@ async function getChats() {
     try {
         inbox.value = await fetchy(`/api/chats`, "GET", {})
         // inbox.value = [{'item':'alkfj'}, {'item': 'akdjflak'}, {'item': 'cnalfj'}]
-        console.log(inbox.value)
     }
     catch (_) {
         return;
@@ -22,7 +21,6 @@ async function getChats() {
 }
 
 async function openSelectedChat(e: Event) {
-    console.log(((e.target) as HTMLButtonElement).value)
     emit("openChat", ((e.target) as HTMLButtonElement).value)
 }
 
