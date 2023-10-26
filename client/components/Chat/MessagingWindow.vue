@@ -75,7 +75,7 @@ onUnmounted(() => {
     <!-- old messages -->
     <section class="oldMessages" v-if="loaded" >
         <div v-for="message in messages" :class="message.from === currentUsername ?  sentClass : receivedClass">
-            <p>{{ message.from }}</p>
+            <p id="messageUser">{{ message.from }}</p>
             <audio controls v-if="message.messageType === 'Audio'" type="audio/mpeg" :src="message.message"> {{ message.message }}</audio> 
             <iframe v-if="message.messageType === 'Video'" :src="message.message" width="420" height="315"></iframe>
         </div>
@@ -147,5 +147,9 @@ onUnmounted(() => {
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+#messageUser {
+    margin-bottom: 2px;
 }
 </style>
