@@ -6,6 +6,7 @@ const isModalVisible = ref(false)
 const videoLink = ref("")
 const videoInput = ref()
 const emit = defineEmits(["messageUploaded"]);
+const errorMessage = ref("")
 
 async function showModal() {
     isModalVisible.value = true
@@ -17,7 +18,13 @@ async function closeModal() {
 }
 
 function updateVideoLink() {
-    videoLink.value = videoInput.value.value
+    const re = new RegExp(/^https?:\/\/www.(youtube|dailymotion).com\/embed\//);
+    if (re.test(videoInput.value.value)) {
+        errorMessage.value = '';
+        videoLink.value = videoInput.value.value;
+    } else {
+        errorMessage.value = "Video link was not supported. Please make sure your video is hosted on youtube or dailymotion and that you are using the 'embed' link.";
+    }
 }
 
 async function usevideoMessage() {
@@ -56,6 +63,8 @@ async function usevideoMessage() {
                     <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
                 </svg>
             </button>
+
+            <p v-if="errorMessage">{{ errorMessage }}</p>
 
             <iframe v-if="videoLink" width="420" height="315" :src="videoLink"></iframe>
 

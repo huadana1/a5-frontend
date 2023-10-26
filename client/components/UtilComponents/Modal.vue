@@ -70,6 +70,7 @@ async function close() {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 99;
   }
 
   .modal {
@@ -80,6 +81,7 @@ async function close() {
     flex-direction: column;
     width: 80vh;
     height: 80vh;
+    z-index: 100;
   }
 
   .modal-header,

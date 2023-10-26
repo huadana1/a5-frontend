@@ -5,6 +5,7 @@ import { ref } from "vue";
 const isModalVisible = ref(false)
 const audioLink = ref("")
 const audioInput = ref()
+const errorMessage = ref("")
 const emit = defineEmits(["messageUploaded"]);
 
 async function showModal() {
@@ -17,7 +18,13 @@ async function closeModal() {
 }
 
 function updateAudioLink() {
-    audioLink.value = audioInput.value.value
+    const re = new RegExp(/^https?:\/\/.*(\.mp3|\.m4a)/);
+    if (re.test(audioInput.value.value)) {
+        errorMessage.value = '';
+        audioLink.value = audioInput.value.value;
+    } else {
+        errorMessage.value = "Audio link was not supported. Please make sure your link starts with 'http' or 'https' and ends with '.mp3' or '.m4a' "
+    }
 }
 
 async function useAudioMessage() {
@@ -44,10 +51,12 @@ async function useAudioMessage() {
         </template>
 
         <template v-slot:body>
+            <p>Input a link to an online audio file download ending with '.mp3'</p>
+            <p>Ex. https://mcdn.podbean.com/mf/web/ksp8jy/Kirby_Smash_Bros_Melee_Tauntb9bqx.mp3</p>
             <input
                 class="input"
                 type="text"
-                placeholder="link to audio file download ending with .mp3"
+                placeholder="https://mcdn.podbean.com/mf/web/ksp8jy/Kirby_Smash_Bros_Melee_Tauntb9bqx.mp3"
                 ref="audioInput"
             />
 
@@ -57,6 +66,8 @@ async function useAudioMessage() {
                     <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
                 </svg>
             </button>
+
+            <p v-if="errorMessage"> {{ errorMessage }}</p>
 
             <audio v-if="audioLink" controls>
                 <source :src="audioLink" type="audio/mpeg">
