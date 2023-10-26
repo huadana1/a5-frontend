@@ -22,7 +22,10 @@ const emit = defineEmits(["openChat"]);
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border: 0.5px solid white;
+    }
+
+    .chatbox:hover {
+        background-color: beige;
     }
 
     .chatbox p {

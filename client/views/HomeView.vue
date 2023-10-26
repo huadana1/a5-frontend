@@ -31,7 +31,7 @@ async function logout() {
   <main>
     <!-- left panel -->
     <section class="left-panel">
-      <h1> Hi {{ currentUsername }}!</h1>
+      <h1> Hi, {{ currentUsername }}!</h1>
 
       <!-- buttons at top -->
       <section class="panelButtons">
@@ -65,7 +65,7 @@ async function logout() {
 
 <style scoped>
 h1 {
-  text-align: center;
+  align-self: flex-start;
 }
 
 main {
@@ -91,12 +91,12 @@ main {
   justify-content: space-between;
   align-items: center;
 
-  background-color: lightgray;
+  background-color: lightblue;
 }
 
 .panelButtons {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 100%;
   height: 10%;
 }

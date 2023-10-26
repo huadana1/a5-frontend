@@ -59,6 +59,10 @@ async function rejectFriendRequest() {
 </template>
 
 <style scoped>
+    h3 {
+        margin: 2px;
+    }
+
     main {
         width: 100%;
         height: 10%;
@@ -68,9 +72,12 @@ async function rejectFriendRequest() {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border: 0.5px solid white;
     }
 
+    main:hover {
+        background-color: beige;
+    }
+    
     .actionButtons {
         width: 30%;
         display: flex;
@@ -106,7 +113,7 @@ async function rejectFriendRequest() {
         margin-left: 4px;
     }
 
-    .chatchatDivbox svg {
-        margin-left: 4px;
+    .chatDiv svg {
+        margin-left: 12px;
     }
 </style>
