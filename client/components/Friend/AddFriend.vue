@@ -17,6 +17,7 @@ const isValidNewFriend = ref(false)
 const messageType = ref('')
 const message = ref('')
 const friendToAdd = ref('')
+const errorMessage = ref('')
 
 async function showModal() {
   isModalVisible.value = true
@@ -33,18 +34,24 @@ async function closeModal() {
 async function checkValidNewFriend(username: string) {
   // user must not be self
   if ( username == currentUsername.value) {
-    console.log('cannot add yourself as a friend');
+    errorMessage.value = "Cannot add yourself as a friend!"
+    isValidNewFriend.value = false;
     return;
   }
 
   const query: Record<string, string> = {username}
-  const user = await fetchy(`/api/users/${username}`, "GET", {query})
+  let user;
+
+  try {
+    user = await fetchy(`/api/users/${username}`, "GET", {query}) }
+  catch {
+    errorMessage.value = `User ${friendToAdd.value} not found!`
+    isValidNewFriend.value = false;
+    return;
+  }
 
   // user must exist
-  if (!user) {
-    console.log("username not found");
-    isValidNewFriend.value = false;
-  } else {
+  if (user) {
     // must not already be friends
     // must not already have sent a request
     const friends = await fetchy("/api/friends", "GET", {})
@@ -53,18 +60,19 @@ async function checkValidNewFriend(username: string) {
     }, []))
 
     if (friends.includes(username)) {
-      console.log("you are already friends with ", username);
+      errorMessage.value = `You are already friends with ${username}`
       isValidNewFriend.value = false;
       friendToAdd.value = ""
     }
     else if (friendRequests.includes(username)) {
-      console.log("you already sent a friend request to ", username);
+      errorMessage.value = `You already have a pending friend request with ${username}`
       isValidNewFriend.value = false;
       friendToAdd.value = ""
     }
     else {
       isValidNewFriend.value = true;
       friendToAdd.value = username;
+      errorMessage.value = '';
     }
   }
 }
@@ -102,6 +110,7 @@ async function addFriend() {
 
     <template v-slot:body>
           <SearchFriend @search-user="checkValidNewFriend"/>
+          <p v-if="errorMessage">{{ errorMessage }}</p>
 
           <template v-if="isValidNewFriend">
             <NewAudioMessageButton v-on:message-uploaded="handleMessageUploaded"/>

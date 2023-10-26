@@ -19,13 +19,15 @@ export default class FriendConcept {
 
   async getRequests(user: ObjectId, filter: "all" | "from" | "to" = "all") {
     if (filter == "from") {
-      return await this.getRequestsFrom(user);
+      return (await this.getRequestsFrom(user)).filter((request) => request.status !== "accepted");
     } else if (filter == "to") {
-      return await this.getRequestsTo(user);
+      return (await this.getRequestsTo(user)).filter((request) => request.status !== "accepted");
     }
-    return await this.requests.readMany({
-      $or: [{ to: user }, { from: user }],
-    });
+    return (
+      await this.requests.readMany({
+        $or: [{ to: user }, { from: user }],
+      })
+    ).filter((request) => request.status !== "accepted");
   }
 
   async getRequestsFrom(user: ObjectId) {

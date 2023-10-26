@@ -47,7 +47,7 @@ async function useAudioMessage() {
             <input
                 class="input"
                 type="text"
-                placeholder="https://mcdn.podbean.com/mf/web/ksp8jy/Kirby_Smash_Bros_Melee_Tauntb9bqx.mp3"
+                placeholder="link to audio file download ending with .mp3"
                 ref="audioInput"
             />
 

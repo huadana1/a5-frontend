@@ -10,7 +10,7 @@ async function close() {
 
 <template>
   <transition name="modal-fade">
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" @click.self = "close">
       <div class="modal"
         role="dialog"
         aria-labelledby="modalTitle"
@@ -78,6 +78,8 @@ async function close() {
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    width: 80vh;
+    height: 80vh;
   }
 
   .modal-header,
