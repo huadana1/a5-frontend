@@ -4,11 +4,11 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
-import Gallery from "@/components/Gallery/Gallery.vue";
 import Inbox from "../components/Chat/Inbox.vue";
 import MessagingWindow from "../components/Chat/MessagingWindow.vue";
 import AddFriend from "../components/Friend/AddFriend.vue";
 import SeeFriendsList from "../components/Friend/SeeFriendsList.vue";
+// import Gallery from "../components/Gallery/Gallery.vue";
 
 
 const { logoutUser } = useUserStore();
@@ -34,14 +34,16 @@ async function logout() {
       <h1> Hi {{ currentUsername }}!</h1>
 
       <!-- buttons at top -->
-      <section>
-      <Gallery/>
-      <SeeFriendsList/>
-      <AddFriend/>
+      <section class="panelButtons">
+        <!-- <Gallery/> -->
+        <AddFriend/>
+        <SeeFriendsList/>
       </section>
 
       <!-- all the chat messages -->
-      <Inbox @open-chat="openChat"/>
+      <section class = "chats">
+        <Inbox @open-chat="openChat"/>
+      </section>
 
       <!-- logout button -->
       <button class="pure-button pure-button-primary" v-if="isLoggedIn" @click="logout">
@@ -90,6 +92,18 @@ main {
   align-items: center;
 
   background-color: lightgray;
+}
+
+.panelButtons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 10%;
+}
+
+.chats {
+  height: 80%;
+  width: 100%;
 }
 
 .right-panel {

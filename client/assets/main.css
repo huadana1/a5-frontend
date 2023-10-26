@@ -3,6 +3,11 @@
 :root {
   --red: rgb(208, 67, 12);
   --base-bg: #f1f3f5;
+  --blue: #1077f0;
+  --purple: #8d46fd;
+  --violet: #da46b0;
+  --fuchsia: #ff0188;
+  --lightblue: #00b8ec;
 }
 
 button {

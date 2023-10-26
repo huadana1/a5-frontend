@@ -69,20 +69,37 @@ onUnmounted(() => {
 <template>
     <section v-if="loaded">
         <h2>All Chats</h2>
-        <section>
+        <section class="actionableChats">
             <h3>Waiting for you to accept</h3>
             <ActionableChat v-for="chat in actionablePendingInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></ActionableChat>
+            <p v-if="actionablePendingInbox.length == 0">No new friend requests waiting for you!</p>
         </section>
         
 
-        <section>
+        <section class="nonactionableChats">
             <h3>Waiting for friend to accept</h3>
             <NonActionableChat v-for="chat in nonActionablePendingInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></NonActionableChat>
+            <p v-if="nonActionablePendingInbox.length == 0">No new friend requests sent!</p>
         </section>
 
-        <section>
+        <section class="fullChats">
             <h3>Chats with friends</h3>
             <NonActionableChat v-for="chat in fullInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></NonActionableChat>
+            <p v-if="fullInbox.length == 0">No chats with friends yet!</p>
         </section>
     </section>
 </template>
+
+<style scoped>
+h3 {
+    border-bottom: 1px solid white;
+}
+
+.nonactionableChats, .actionableChats, .fullChats {
+    background-color: lightskyblue;
+    margin: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+</style>
