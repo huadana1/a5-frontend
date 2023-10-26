@@ -71,11 +71,13 @@ onUnmounted(() => {
     <h1>{{ props.user2 }}</h1>
 
     <!-- old messages -->
-    <section class="old-messages">
-        <p v-if="loaded" v-for="message in messages" :class="{from: message.from == currentUsername, to: message.from != currentUsername}"> {{ message.message }}</p>
-        <p v-else-if="!props.user2">No chat selected</p>
-        <p v-else>Loading...</p>
-    </section>
+    <template class="old-messages" v-if="loaded" v-for="message in messages">
+        <audio controls v-if="message.messageType === 'Audio'" type="audio/mpeg" :src="message.message"> {{ message.message }}</audio> 
+        <iframe v-if="message.messageType === 'Video'" :src="message.message" width="420" height="315"></iframe>
+    </template>
+
+    <p v-else-if="!props.user2">No chat selected</p>
+    <p v-else>Loading...</p>
 
     <!-- send a new message -->
     <section class="message-input">
