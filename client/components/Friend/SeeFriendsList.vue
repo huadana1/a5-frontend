@@ -51,9 +51,11 @@ async function getFriends() {
     </template>
 
     <template v-slot:body>
-        <template v-if="loaded">
+        <div v-if="loaded">
             <p v-for="friend in friends">{{ friend }}</p>
-        </template>
+            <p v-if="friends.length == 0">No friends yet &#128532</p>
+            <p v-if="friends.length == 0">Add a friend to get started passing the mic! &#128512 </p> 
+        </div>
         <template v-else>
             <p>Loading...</p>
         </template>
@@ -63,6 +65,13 @@ async function getFriends() {
 </template>
 
 <style scoped>
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 button {
   height: 30px;
   width: 175px;
