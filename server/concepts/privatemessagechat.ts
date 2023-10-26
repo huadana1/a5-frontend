@@ -12,6 +12,7 @@ export interface PrivateMessageChatMessagesDoc extends BaseDoc {
   from: ObjectId;
   to: ObjectId;
   message: string;
+  messageType: "Audio" | "Video";
 }
 
 export default class PrivateMessageChatConcept {
@@ -142,7 +143,7 @@ export default class PrivateMessageChatConcept {
    * @param to - user who is receiving the message
    * @param message - message to send to chat
    */
-  async sendMessage(from: ObjectId, to: ObjectId, message: string, initial = false) {
+  async sendMessage(from: ObjectId, to: ObjectId, message: string, messageType: "Audio" | "Video", initial = false) {
     if (message == null) {
       throw new EmptyMessageError();
     }
@@ -156,7 +157,7 @@ export default class PrivateMessageChatConcept {
       throw new ChatIsPendingError();
     }
 
-    const _id = await this.messages.createOne({ from, to, message });
+    const _id = await this.messages.createOne({ from, to, message, messageType });
     return { msg: "Chat message sent!", sentMsgId: _id };
   }
 }

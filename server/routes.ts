@@ -78,7 +78,7 @@ class Routes {
 
   // sync adding friend and making new private message chat
   @Router.post("/friend/requests/:to")
-  async sendFriendRequest(session: WebSessionDoc, to: string, message: string, messageType: string) {
+  async sendFriendRequest(session: WebSessionDoc, to: string, message: string, messageType: "Audio" | "Video") {
     if (to == null || message == null || messageType == null) {
       throw new BadValuesError("All fields must be filled out!");
     }
@@ -87,7 +87,7 @@ class Routes {
     const toId = (await User.getUserByUsername(to))._id;
 
     await Chat.createChat(user, toId);
-    const sentMessage = await Chat.sendMessage(user, toId, message, true);
+    const sentMessage = await Chat.sendMessage(user, toId, message, messageType, true);
     await Gallery.addItem(user, messageType, message);
 
     return { msg: sentMessage.msg + (await Friend.sendRequest(user, toId)).msg };
@@ -145,7 +145,7 @@ class Routes {
   }
 
   @Router.post("/chats/chat/:to")
-  async sendChatMessage(session: WebSessionDoc, to: string, message: string, messageType: string) {
+  async sendChatMessage(session: WebSessionDoc, to: string, message: string, messageType: "Audio" | "Video") {
     if (to == null || message == null || messageType == null) {
       throw new BadValuesError("All fields must be filled out!");
     }
@@ -153,7 +153,7 @@ class Routes {
     const user = WebSession.getUser(session);
     const toId = (await User.getUserByUsername(to))._id;
 
-    const sentMessage = await Chat.sendMessage(user, toId, message);
+    const sentMessage = await Chat.sendMessage(user, toId, message, messageType);
     await Gallery.addItem(user, messageType, message);
 
     return sentMessage.msg;
