@@ -109,14 +109,14 @@ onUnmounted(() => {
     overflow-y: scroll;
 }
 .sent {
-    color: red;
+    color: blue;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     align-self: flex-end;
 }
 .received {
-    color: blue;
+    color: red;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

@@ -61,3 +61,15 @@ async function getFriends() {
   
   </Modal>
 </template>
+
+<style scoped>
+button {
+  height: 30px;
+  width: 175px;
+}
+
+button svg {
+  margin-right: 8px;
+  margin-left: 0px;
+}
+</style>

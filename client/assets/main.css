@@ -1,7 +1,7 @@
 /* Add some global styles here! */
 
 :root {
-  --red: rgb(208, 67, 12);
+  --red: #ed340e;
   --base-bg: #f1f3f5;
   --blue: #1077f0;
   --purple: #8d46fd;
@@ -9,6 +9,10 @@
   --fuchsia: #ff0188;
   --lightblue: #70d0eb;
   --beige: #ead3a5;
+}
+
+p {
+  font-size: 20px;
 }
 
 button {

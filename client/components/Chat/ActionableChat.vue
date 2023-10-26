@@ -77,7 +77,7 @@ async function rejectFriendRequest() {
     main:hover {
         background-color: beige;
     }
-    
+
     .actionButtons {
         width: 30%;
         display: flex;
@@ -95,9 +95,17 @@ async function rejectFriendRequest() {
         color: white;
     }
 
+    #accept:hover {
+        background-color: rgb(1, 1, 212);
+    }
+
     #reject {
         background-color: red;
         color: white;
+    }
+
+    #reject:hover {
+        background-color: rgb(191, 0, 0);
     }
 
     .chatDiv {
