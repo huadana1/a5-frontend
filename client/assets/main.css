@@ -5,6 +5,13 @@
   --base-bg: #f1f3f5;
 }
 
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
 button.btn-small {
   font-size: 80%;
 }

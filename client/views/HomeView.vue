@@ -4,7 +4,6 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
-
 import Gallery from "@/components/Gallery/Gallery.vue";
 import Inbox from "../components/Chat/Inbox.vue";
 import MessagingWindow from "../components/Chat/MessagingWindow.vue";
@@ -30,12 +29,6 @@ async function logout() {
 
 <template>
   <main>
-    <!-- <h1>Home Page</h1> -->
-    <!-- <section>
-      <h1 v-if="isLoggedIn">Welcome {{ currentUsername }}!</h1>
-      <h1 v-else>Please login!</h1>
-    </section> -->
-
     <!-- left panel -->
     <section class="left-panel">
       <h1> Hi {{ currentUsername }}!</h1>
@@ -65,8 +58,6 @@ async function logout() {
     <section class="right-panel">
       <MessagingWindow :user2="chattingWith"/>
     </section>
-
-
   </main>
 </template>
 
@@ -78,7 +69,7 @@ h1 {
 main {
   margin: 0;
   height: 100vh;
-  width: 100vh;
+  width: 100vw;
   box-sizing: border-box;
 
   display: flex;
@@ -89,7 +80,7 @@ main {
 .left-panel {
   margin: 0;
   padding: 8px;
-  width: 45%;
+  width: 25vw;
   min-height: 100vh;
   box-sizing: border-box;
 
@@ -104,7 +95,7 @@ main {
 .right-panel {
   margin: 0;
   padding: 8px;
-  width: 55%;
+  width: 75vw;
   height: 100vh;
   box-sizing: border-box;
 

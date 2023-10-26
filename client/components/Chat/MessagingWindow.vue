@@ -7,7 +7,9 @@ import Gallery from '../Gallery/Gallery.vue';
 import NewAudioMessageButton from '../UtilComponents/NewAudioMessageButton.vue';
 import NewVideoMessageButton from '../UtilComponents/NewVideoMessageButton.vue';
 
-const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
+const { currentUsername } = storeToRefs(useUserStore());
+const sentClass = "sent singleMessage"
+const receivedClass = "received singleMessage"
 
 const props = defineProps(['user2'])
 const loaded = ref(false);
@@ -68,30 +70,74 @@ onUnmounted(() => {
 
 <template>
     <!-- name of user chatting with -->
-    <h1>{{ props.user2 }}</h1>
-
+    <h1 class="usernameHeader">{{ props.user2 }}</h1>
+    
     <!-- old messages -->
-    <template class="old-messages" v-if="loaded" v-for="message in messages">
-        <audio controls v-if="message.messageType === 'Audio'" type="audio/mpeg" :src="message.message"> {{ message.message }}</audio> 
-        <iframe v-if="message.messageType === 'Video'" :src="message.message" width="420" height="315"></iframe>
-    </template>
+    <section class="oldMessages" v-if="loaded" >
+        <div v-for="message in messages" :class="message.from === currentUsername ?  sentClass : receivedClass">
+            <p>{{ message.from }}</p>
+            <audio controls v-if="message.messageType === 'Audio'" type="audio/mpeg" :src="message.message"> {{ message.message }}</audio> 
+            <iframe v-if="message.messageType === 'Video'" :src="message.message" width="420" height="315"></iframe>
+        </div>
+        
+    </section>
 
     <p v-else-if="!props.user2">No chat selected</p>
     <p v-else>Loading...</p>
 
     <!-- send a new message -->
-    <section class="message-input">
+    <section class="messageInput">
         <NewAudioMessageButton @message-uploaded="handleMessageUploaded"/>
         <NewVideoMessageButton @message-uploaded="handleMessageUploaded"/>
-        <Gallery/>
+        <Gallery id="galleryButton"/>
     </section>
 </template>
 
 <style scoped>
-.from {
-    color: red;
+.usernameHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    margin: 0;
 }
-.to {
+
+.oldMessages {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.sent {
+    color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: flex-end;
+}
+.received {
     color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-start;
+}
+.messageInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px solid lightgray;
+    padding: 8px;
+}
+
+#galleryButton {
+    display: flex;
+    justify-self: flex-end;
+}
+.singleMessage {
+    border-radius: 2em;
+    width: 30vw;
+    margin: 0;
+    padding: 8px;
 }
 </style>

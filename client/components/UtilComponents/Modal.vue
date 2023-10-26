@@ -79,8 +79,8 @@ async function close() {
     overflow-x: auto;
     display: flex;
     flex-direction: column;
-    width: 80vh;
-    height: 80vh;
+    width: 85vw;
+    height: 70vh;
     z-index: 100;
   }
 
@@ -95,6 +95,9 @@ async function close() {
     border-bottom: 1px solid #eeeeee;
     color: #4AAE9B;
     justify-content: space-between;
+    width: 97%;
+    height: 5%;
+    font-size: 2em;
   }
 
   .modal-footer {
@@ -105,6 +108,12 @@ async function close() {
   .modal-body {
     position: relative;
     padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 100%;
   }
 
   .btn-close {
