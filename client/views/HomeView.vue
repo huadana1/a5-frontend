@@ -9,6 +9,7 @@ import Gallery from "@/components/Gallery/Gallery.vue";
 import Inbox from "../components/Chat/Inbox.vue";
 import MessagingWindow from "../components/Chat/MessagingWindow.vue";
 import AddFriend from "../components/Friend/AddFriend.vue";
+import SeeFriendsList from "../components/Friend/SeeFriendsList.vue";
 
 
 const { logoutUser } = useUserStore();
@@ -41,9 +42,9 @@ async function logout() {
       <!-- gallery button -->
       <Gallery/>
 
+      <SeeFriendsList></SeeFriendsList>
       <AddFriend/>
       <Inbox @open-chat="openChat"/>
-      <!-- <LogoutButton v-if="isLoggedIn"/> -->
       <button class="pure-button pure-button-primary" v-if="isLoggedIn" @click="logout">Logout</button>
 
     </section>
