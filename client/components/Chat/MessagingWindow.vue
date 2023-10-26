@@ -82,11 +82,11 @@ onUnmounted(() => {
         
     </section>
 
-    <p v-else-if="!props.user2">No chat selected</p>
-    <p v-else>Loading...</p>
+    <p v-else-if="!props.user2" class="notReady">No chat selected</p>
+    <p v-else class="notReady">Loading...</p>
 
     <!-- send a new message -->
-    <section class="messageInput">
+    <section class="messageInput" v-if="props.user2">
         <NewAudioMessageButton @message-uploaded="handleMessageUploaded"/>
         <NewVideoMessageButton @message-uploaded="handleMessageUploaded"/>
         <Gallery id="galleryButton"/>
@@ -106,6 +106,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    overflow-y: scroll;
 }
 .sent {
     color: red;
@@ -139,5 +140,12 @@ onUnmounted(() => {
     width: 30vw;
     margin: 0;
     padding: 8px;
+}
+.notReady {
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 </style>

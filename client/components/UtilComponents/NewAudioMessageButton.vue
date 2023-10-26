@@ -71,9 +71,10 @@ async function useAudioMessage() {
                         </svg>
                     </button>
                 </div>
+                <p v-if="errorMessage" id="errorMessage"> {{ errorMessage }}</p>
+
             </section>
 
-            <p v-if="errorMessage"> {{ errorMessage }}</p>
 
             <audio v-if="audioLink" controls>
                 <source :src="audioLink" type="audio/mpeg">
@@ -81,7 +82,7 @@ async function useAudioMessage() {
             </audio>
 
             <button  v-if="audioLink" type="submit" class="pure-button-primary pure-button" @click="useAudioMessage">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 10 15">
                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
                 </svg>
                 Send this audio
@@ -112,6 +113,10 @@ async function useAudioMessage() {
 
 .inputGroup input {
     width: 50%;
+}
+
+#errorMessage {
+    font-weight: bold;
 }
 
 </style>
