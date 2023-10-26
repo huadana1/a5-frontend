@@ -70,10 +70,10 @@ class Routes {
     return await Friend.removeFriend(user, friendId);
   }
 
-  @Router.get("/friend/requests")
-  async getRequests(session: WebSessionDoc) {
+  @Router.get("/friend/requests/?:filter")
+  async getRequests(session: WebSessionDoc, filter?: "from" | "to") {
     const user = WebSession.getUser(session);
-    return await Responses.friendRequests(await Friend.getRequests(user));
+    return await Responses.friendRequests(await Friend.getRequests(user, filter || "all"));
   }
 
   // sync adding friend and making new private message chat
@@ -87,7 +87,7 @@ class Routes {
     const toId = (await User.getUserByUsername(to))._id;
 
     await Chat.createChat(user, toId);
-    const sentMessage = await Chat.sendMessage(user, toId, message);
+    const sentMessage = await Chat.sendMessage(user, toId, message, true);
     await Gallery.addItem(user, messageType, message);
 
     return { msg: sentMessage.msg + (await Friend.sendRequest(user, toId)).msg };
@@ -95,7 +95,7 @@ class Routes {
 
   // don't need to create private chat when accepting a friend request because chat was already created when request was sent
   // can't view messages or send messages in chat until friend request is accepted
-  @Router.put("/friend/accept/:from")
+  @Router.patch("/friend/accept/:from")
   async acceptFriendRequest(session: WebSessionDoc, from: string) {
     if (from == null) {
       throw new BadValuesError("From cannot be empty!");
@@ -103,11 +103,12 @@ class Routes {
 
     const user = WebSession.getUser(session);
     const fromId = (await User.getUserByUsername(from))._id;
+    await Chat.updateChatStatus(fromId, user);
     return await Friend.acceptRequest(fromId, user);
   }
 
   // sync rejecting friend request with deleting chat
-  @Router.put("/friend/reject/:from")
+  @Router.patch("/friend/reject/:from")
   async rejectFriendRequest(session: WebSessionDoc, from: string) {
     if (from == null) {
       throw new BadValuesError("From cannot be empty!");

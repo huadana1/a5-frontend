@@ -1,20 +1,28 @@
 <script setup lang="ts">
+import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
 
 import Gallery from "@/components/Gallery/Gallery.vue";
-import LogoutButton from "@/components/Logout/LogoutButton.vue";
 import Inbox from "../components/Chat/Inbox.vue";
 import MessagingWindow from "../components/Chat/MessagingWindow.vue";
 import AddFriend from "../components/Friend/AddFriend.vue";
+
+
+const { logoutUser } = useUserStore();
 
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 const chattingWith = ref('')
 
 function openChat(user: string) {
   chattingWith.value = user;
+}
+
+async function logout() {
+  await logoutUser();
+  void router.push({ name: "Login" });
 }
 
 </script>
@@ -29,12 +37,15 @@ function openChat(user: string) {
 
     <!-- left panel -->
     <section class="left-panel">
+      <h1> Hi {{ currentUsername }}!</h1>
       <!-- gallery button -->
       <Gallery/>
 
       <AddFriend/>
       <Inbox @open-chat="openChat"/>
-      <LogoutButton v-if="isLoggedIn"/>
+      <!-- <LogoutButton v-if="isLoggedIn"/> -->
+      <button class="pure-button pure-button-primary" v-if="isLoggedIn" @click="logout">Logout</button>
+
     </section>
 
     <!-- basically just the chat window -->

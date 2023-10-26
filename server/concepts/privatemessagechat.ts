@@ -35,6 +35,16 @@ export default class PrivateMessageChatConcept {
   }
 
   /**
+   * Updates the status of the chat between user1 and user2 from 'pending' to 'full'
+   *
+   * @param chatId id of the chat to be changed from 'pending' status to 'full'
+   */
+  async updateChatStatus(user1: ObjectId, user2: ObjectId) {
+    const chatId = await this.getChatId(user1, user2);
+    await this.chats.updateOne({ _id: chatId }, { status: "full" });
+  }
+
+  /**
    *
    * @param user - id of the user to get chats of
    * @returns all chats associated with the user
@@ -132,7 +142,7 @@ export default class PrivateMessageChatConcept {
    * @param to - user who is receiving the message
    * @param message - message to send to chat
    */
-  async sendMessage(from: ObjectId, to: ObjectId, message: string) {
+  async sendMessage(from: ObjectId, to: ObjectId, message: string, initial = false) {
     if (message == null) {
       throw new EmptyMessageError();
     }
@@ -141,8 +151,8 @@ export default class PrivateMessageChatConcept {
     if (!(await this.isExistingChat(from, to))) {
       throw new ChatNotFoundError(from, to);
     }
-    // make sure chat is not a pending chat
-    if (!(await this.isFullChat(from, to))) {
+    // can only send message when chat is a full chat or when it is the initial message
+    if (!((await this.isFullChat(from, to)) || initial)) {
       throw new ChatIsPendingError();
     }
 

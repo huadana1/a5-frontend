@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { onBeforeMount, onBeforeUpdate, onUpdated, ref, watchEffect } from 'vue';
+import { onBeforeMount, onBeforeUpdate, onUnmounted, onUpdated, ref, watchEffect } from 'vue';
 import { useUserStore } from '../../stores/user';
 import { fetchy } from '../../utils/fetchy';
 import Gallery from '../Gallery/Gallery.vue';
@@ -12,7 +12,7 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 const props = defineProps(['user2'])
 const loaded = ref(false);
 const messages = ref<Array<Record<string, string>>>([])
-const intervalTimer = ref()
+let intervalTimer: NodeJS.Timeout;
 
 async function getChatMessages(user: string) {
     try {
@@ -49,16 +49,19 @@ onBeforeMount(async () => {
 });
 
 onBeforeUpdate(() => {
-    clearInterval(intervalTimer.value);
+    clearInterval(intervalTimer);
 })
 
 onUpdated(async () => {
     if (props.user2) {
-        intervalTimer.value = setInterval(async () => {
+        intervalTimer = setInterval(async () => {
             await getChatMessages(props.user2); 
-            console.log('polling', props.user2)
         }, 1000)
     }
+})
+
+onUnmounted(() => {
+    clearInterval(intervalTimer);
 })
 
 </script>

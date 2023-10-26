@@ -48,7 +48,7 @@ async function checkValidNewFriend(username: string) {
     // must not already be friends
     // must not already have sent a request
     const friends = await fetchy("/api/friends", "GET", {})
-    const friendRequests = await fetchy("/api/friend/requests", "GET", {}).then((friendRequestData: any[]) => friendRequestData.reduce((reqs: string[], requestedFriend: any) => {
+    const friendRequests = await fetchy("/api/friend/requests/all", "GET", {}).then((friendRequestData: any[]) => friendRequestData.reduce((reqs: string[], requestedFriend: any) => {
       return [...reqs, requestedFriend.to, requestedFriend.from]
     }, []))
 
@@ -72,7 +72,6 @@ async function checkValidNewFriend(username: string) {
 function handleMessageUploaded(messageLink: string, type: "Video" | "Audio") {
   messageType.value = type;
   message.value = messageLink;
-  console.log(message.value)
 }
 
 async function addFriend() {
