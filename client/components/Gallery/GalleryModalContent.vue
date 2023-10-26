@@ -2,7 +2,7 @@
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, onUnmounted, ref } from "vue";
 
 const { loginUser, updateSession } = useUserStore();
 const { isLoggedIn } = storeToRefs(useUserStore());
@@ -11,8 +11,8 @@ const emit = defineEmits(['closedModal']);
 const props = defineProps(['galleryName']);
 
 const loaded = ref(false);
+let intervalTimer: NodeJS.Timeout;
 let galleryItems = ref<Array<Record<string, string>>>([]);
-
 
 async function getItems(galleryName: string) {
     let query: Record<string, string> = galleryName !== undefined ? { galleryName } : {};
@@ -44,9 +44,13 @@ function handleItemSelected(e: Event) {
 }
 
 onBeforeMount(async () => {
-  await getItems(props.galleryName);
+  intervalTimer = setInterval(async () => {await getItems(props.galleryName);}, 1000);
   loaded.value = true;
 });
+
+onUnmounted(() => {
+    clearInterval(intervalTimer);
+})
 </script>
 
 <template>
