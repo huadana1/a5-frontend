@@ -39,13 +39,18 @@ async function logout() {
     <!-- left panel -->
     <section class="left-panel">
       <h1> Hi {{ currentUsername }}!</h1>
-      <!-- gallery button -->
-      <Gallery/>
 
-      <SeeFriendsList></SeeFriendsList>
+      <!-- buttons at top -->
+      <section>
+      <Gallery/>
+      <SeeFriendsList/>
       <AddFriend/>
+      </section>
+
+      <!-- all the chat messages -->
       <Inbox @open-chat="openChat"/>
 
+      <!-- logout button -->
       <button class="pure-button pure-button-primary" v-if="isLoggedIn" @click="logout">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>

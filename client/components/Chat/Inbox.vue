@@ -67,23 +67,22 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <h1>All Chats</h1>
     <section v-if="loaded">
-        <!-- <button v-for="chat in inbox" v-on:click="openSelectedChat" :value="chat.user1 == currentUsername ? chat.user2 : chat.user1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-            </svg>
+        <h2>All Chats</h2>
+        <section>
+            <h3>Waiting for you to accept</h3>
+            <ActionableChat v-for="chat in actionablePendingInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></ActionableChat>
+        </section>
+        
 
-            {{chat.user1 == currentUsername ? chat.user2 : chat.user1}}
-        </button> -->
-        <h3>Waiting for you to accept</h3>
-        <ActionableChat v-for="chat in actionablePendingInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></ActionableChat>
+        <section>
+            <h3>Waiting for friend to accept</h3>
+            <NonActionableChat v-for="chat in nonActionablePendingInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></NonActionableChat>
+        </section>
 
-        <h3>Waiting for friend to accept</h3>
-        <NonActionableChat v-for="chat in nonActionablePendingInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></NonActionableChat>
-
-        <h3>Chats with friends</h3>
-        <NonActionableChat v-for="chat in fullInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></NonActionableChat>
+        <section>
+            <h3>Chats with friends</h3>
+            <NonActionableChat v-for="chat in fullInbox" @click ="openSelectedChat(chat)" :user2="getOtherUser(chat)"></NonActionableChat>
+        </section>
     </section>
 </template>
