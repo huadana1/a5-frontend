@@ -87,8 +87,10 @@ onUnmounted(() => {
 
     <!-- send a new message -->
     <section class="messageInput" v-if="props.user2">
-        <NewAudioMessageButton @message-uploaded="handleMessageUploaded"/>
-        <NewVideoMessageButton @message-uploaded="handleMessageUploaded"/>
+        <div class="messageButtonInputs">
+            <NewAudioMessageButton @message-uploaded="handleMessageUploaded"/>
+            <NewVideoMessageButton @message-uploaded="handleMessageUploaded"/>
+        </div>
         <Gallery id="galleryButton"/>
     </section>
 </template>
@@ -129,6 +131,12 @@ onUnmounted(() => {
     align-items: center;
     border-top: 1px solid lightgray;
     padding: 8px;
+}
+
+.messageButtonInputs {
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto;
 }
 
 #galleryButton {

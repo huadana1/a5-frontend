@@ -76,6 +76,7 @@ async function rejectFriendRequest() {
 
     main:hover {
         background-color: beige;
+        cursor: pointer;
     }
 
     .actionButtons {
@@ -97,6 +98,7 @@ async function rejectFriendRequest() {
 
     #accept:hover {
         background-color: rgb(1, 1, 212);
+        cursor: pointer;
     }
 
     #reject {
@@ -106,6 +108,7 @@ async function rejectFriendRequest() {
 
     #reject:hover {
         background-color: rgb(191, 0, 0);
+        cursor: pointer;
     }
 
     .chatDiv {

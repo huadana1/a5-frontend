@@ -26,6 +26,7 @@ const emit = defineEmits(["openChat"]);
 
     .chatbox:hover {
         background-color: beige;
+        cursor: pointer;
     }
 
     .chatbox p {

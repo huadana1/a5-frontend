@@ -22,6 +22,10 @@ button {
   vertical-align: middle;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 button.btn-small {
   font-size: 80%;
 }

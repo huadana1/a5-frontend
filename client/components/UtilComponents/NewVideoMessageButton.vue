@@ -19,9 +19,10 @@ async function closeModal() {
 
 function updateVideoLink() {
     const re = new RegExp(/^https?:\/\/www.(youtube|dailymotion).com\/embed\//);
-    if (re.test(videoInput.value.value)) {
+    const val = videoInput.value.value.trim();
+    if (re.test(val)) {
         errorMessage.value = '';
-        videoLink.value = videoInput.value.value;
+        videoLink.value = val;
     } else {
         errorMessage.value = "Video link was not supported. Please make sure your video is hosted on youtube or dailymotion and that you are using the 'embed' link.";
     }
@@ -34,7 +35,7 @@ async function usevideoMessage() {
 </script>
 
 <template>
-    <button @click="showModal">
+    <button @click="showModal" id="showModalButton">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-camera-video-fill" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z"/>
         </svg>
@@ -112,6 +113,18 @@ async function usevideoMessage() {
 
 #errorMessage {
     font-weight: bold;
+}
+
+#showModalButton {
+    border: 0px;
+    margin: 16px;
+    background-color: white;
+    padding: 4px;
+}
+
+#showModalButton:hover {
+    background-color: lightblue;
+    cursor: pointer;
 }
 
 </style>

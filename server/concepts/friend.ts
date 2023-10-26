@@ -45,7 +45,7 @@ export default class FriendConcept {
   async sendRequest(from: ObjectId, to: ObjectId) {
     await this.canSendRequest(from, to);
     await this.requests.createOne({ from, to, status: "pending" });
-    return { msg: "Sent request!" };
+    return { msg: "Friend request sent!" };
   }
 
   async acceptRequest(from: ObjectId, to: ObjectId) {

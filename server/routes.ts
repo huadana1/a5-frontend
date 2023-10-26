@@ -90,7 +90,7 @@ class Routes {
     const sentMessage = await Chat.sendMessage(user, toId, message, messageType, true);
     await Gallery.addItem(user, messageType, message);
 
-    return { msg: sentMessage.msg + (await Friend.sendRequest(user, toId)).msg };
+    return { msg: (await Friend.sendRequest(user, toId)).msg };
   }
 
   // don't need to create private chat when accepting a friend request because chat was already created when request was sent

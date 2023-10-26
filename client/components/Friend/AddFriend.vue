@@ -99,6 +99,7 @@ async function addFriend() {
   type="button"
   class="btn"
   v-on:click="showModal"
+  id="showModalButton"
   >
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
       <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
@@ -113,37 +114,53 @@ async function addFriend() {
     </template>
 
     <template v-slot:body>
+      <main>
+        <section class = 'inputGroup'>
           <SearchFriend @search-user="checkValidNewFriend"/>
-          <p v-if="errorMessage">{{ errorMessage }}</p>
+          <p v-if="errorMessage" id="errorMessage">{{ errorMessage }}</p>
+        </section>
 
-          <template v-if="isValidNewFriend">
+        <section v-if="isValidNewFriend">
+          <div class="hello">
             <NewAudioMessageButton v-on:message-uploaded="handleMessageUploaded"/>
             <NewVideoMessageButton v-on:message-uploaded="handleMessageUploaded"/>
-            <p>Say hello to your new friend!</p>
+          </div>
+          <p>Say hello to your new friend!</p>
+        </section>
 
-            <!-- render message -->
-            <iframe v-if="messageType == 'Video'" width="420" height="315" :src="message"></iframe>
-            <audio controls v-if="messageType == 'Audio'">
-              <source :src="message" type="audio/mpeg">
-              Your browser does not support the audio tag.
-            </audio>
+        <!-- <section class="confirm"> -->
+          <!-- render message -->
+          <iframe v-if="messageType == 'Video'" width="420" height="315" :src="message"></iframe>
+          <audio controls v-if="messageType == 'Audio'">
+            <source :src="message" type="audio/mpeg">
+            Your browser does not support the audio tag.
+          </audio>
 
-            <!-- submit message -->
-            <button v-if="message" type="submit" class="pure-button-primary pure-button" @click="addFriend">
-              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-              Add friend and start new chat</button>
-          </template>
-        
-          
+          <!-- submit message -->
+          <button v-if="message" type="submit" class="pure-button-primary pure-button" @click="addFriend" id="confirmButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="-1 1 16 16">
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Add friend and start new chat
+          </button>
+        <!-- </section> -->
+      </main>
     </template>
   
   </Modal>
 </template>
 
 <style scoped>
-button {
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#showModalButton {
   height: 30px;
   width: 125px;
 }
@@ -152,4 +169,46 @@ button svg {
   margin-right: 4px;
   margin-left: 0px;
 }
+
+#errorMessage {
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.inputGroup input {
+    width: 50%;
+}
+
+.hello {
+  display: flex;
+  justify-content: center;
+  margin: 16px;
+}
+
+.confirm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin: 16px;
+}
+
+#confirmButton {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin: 12px;
+}
+
 </style>

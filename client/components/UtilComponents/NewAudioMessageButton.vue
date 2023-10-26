@@ -19,9 +19,10 @@ async function closeModal() {
 
 function updateAudioLink() {
     const re = new RegExp(/^https?:\/\/.*(\.mp3|\.m4a)/);
-    if (re.test(audioInput.value.value)) {
+    const val = (audioInput.value.value).trim();
+    if (re.test(val)) {
         errorMessage.value = '';
-        audioLink.value = audioInput.value.value;
+        audioLink.value = val;
     } else {
         errorMessage.value = "Audio link was not supported. Please make sure your link starts with 'http' or 'https' and ends with '.mp3' or '.m4a' "
     }
@@ -34,7 +35,7 @@ async function useAudioMessage() {
 </script>
 
 <template>
-    <button @click="showModal" id="audioButton">
+    <button @click="showModal" id="showModalButton">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16">
             <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z"/>
             <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
@@ -53,7 +54,7 @@ async function useAudioMessage() {
         <template v-slot:body>
             <section>
                 <div class="instructions">
-                    <p>Input a link to an online audio file download ending with '.mp3'</p>
+                    <p>Input a link to an online audio file download ending with '.mp3' or '.m4a'</p>
                     <p>Ex. https://mcdn.podbean.com/mf/web/ksp8jy/Kirby_Smash_Bros_Melee_Tauntb9bqx.mp3</p>
                 </div>
 
@@ -117,6 +118,18 @@ async function useAudioMessage() {
 
 #errorMessage {
     font-weight: bold;
+}
+
+#showModalButton {
+    border: 0px;
+    margin: 16px;
+    background-color: white;
+    padding: 4px;
+}
+
+#showModalButton:hover {
+    background-color: lightblue;
+    cursor: pointer;
 }
 
 </style>
