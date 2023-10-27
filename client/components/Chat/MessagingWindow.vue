@@ -92,7 +92,7 @@ onUnmounted(() => {
             
         </section>
 
-        <p v-else-if="!props.user2" class="notReady">No chat selected</p>
+        <p v-else-if="!props.user2" class="notReady">No chat selected. If there are no chats, add a new friend to make a chat!</p>
         <p v-else class="notReady">Loading...</p>
 
         
@@ -172,7 +172,8 @@ onUnmounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80%;
+    width: 100%;
 }
 
 #messageUser {

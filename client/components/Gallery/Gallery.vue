@@ -30,7 +30,9 @@ async function closeModal() {
         </template>
 
         <template v-slot:body>
-          <GalleryModalContent v-for = "galleryName in [{galleryName: 'Audio'}, {galleryName: 'Video'}]" v-bind="galleryName"/>
+          <div class="galleries">
+            <GalleryModalContent v-for = "galleryName in [{galleryName: 'Audio'}, {galleryName: 'Video'}]" v-bind="galleryName"/>
+          </div>
         </template>
 
       </Modal>
@@ -47,5 +49,12 @@ async function closeModal() {
 #showModalButton:hover {
     background-color: lightblue;
     cursor: pointer;
+}
+
+.galleries {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
 }
 </style>

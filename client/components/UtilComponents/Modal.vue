@@ -76,7 +76,7 @@ async function close() {
   .modal {
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
-    overflow-x: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     width: 75vw;
@@ -112,7 +112,7 @@ async function close() {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    width: 100%;
     height: 100%;
   }
 
