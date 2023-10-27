@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
-import { storeToRefs } from "pinia";
 import { onBeforeMount, onUnmounted, ref } from "vue";
-
-const { loginUser, updateSession } = useUserStore();
-const { isLoggedIn } = storeToRefs(useUserStore());
 
 const emit = defineEmits(['closedModal']);
 const props = defineProps(['galleryName']);
@@ -56,7 +51,12 @@ onUnmounted(() => {
 <template>
     <h1> {{ props.galleryName }}</h1>
     <section v-if="loaded">
-        <button v-for="item in galleryItems" :value="item.item" v-on:click='handleItemSelected'>{{item}}</button>
+        <!-- <button v-for="item in galleryItems" :value="item.item" v-on:click='handleItemSelected'>{{item}}</button> -->
+        <div v-for="item in galleryItems" class="singleItem">
+            <p> {{ item.item }}</p>
+            <audio controls v-if="props.galleryName === 'Audio'" type="audio/mpeg" :src="item.item"></audio> 
+            <iframe v-if="props.galleryName === 'Video'" :src="item.item" width="420" height="315"></iframe>
+        </div>
     </section>
     <p v-else>Loading...</p>
 </template>
