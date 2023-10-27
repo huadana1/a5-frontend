@@ -15,9 +15,10 @@ async function closeModal() {
 </script>
 
 <template>
-    <button type="button" class="btn" v-on:click="showModal">
-        <img src="../../assets/images/imagesIcon.svg" alt="Bootstrap" width="15" height="15"> Open Gallery!
-      </button>
+    <button type="button" class="btn" v-on:click="showModal" id = 'showModalButton'>
+      <img src="../../assets/images/imagesIcon.svg" alt="Bootstrap" width="30" height="30"> 
+      Open Gallery!
+    </button>
 
       <Modal
         v-show="isModalVisible"
@@ -34,3 +35,17 @@ async function closeModal() {
 
       </Modal>
 </template>
+
+<style scoped>
+#showModalButton {
+    border: 0.25px solid lightgray;
+    margin: 16px;
+    background-color: white;
+    padding: 4px;
+}
+
+#showModalButton:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+</style>

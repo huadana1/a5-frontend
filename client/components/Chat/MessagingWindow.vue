@@ -72,36 +72,48 @@ onUnmounted(() => {
     <!-- name of user chatting with -->
     <h1 class="usernameHeader">{{ props.user2 }}</h1>
     
-    <!-- old messages -->
-    <section class="oldMessages" v-if="loaded" >
-        <div v-for="message in messages" :class="message.from === currentUsername ?  sentClass : receivedClass">
-            <p id="messageUser">{{ message.from }}</p>
-            <audio controls v-if="message.messageType === 'Audio'" type="audio/mpeg" :src="message.message"> {{ message.message }}</audio> 
-            <iframe v-if="message.messageType === 'Video'" :src="message.message" width="420" height="315"></iframe>
-        </div>
+    <div class = 'bottomPart'>
+        <!-- send a new message -->
+        <section class="messageInput" v-if="props.user2">
+            <div class="messageButtonInputs">
+                <NewAudioMessageButton @message-uploaded="handleMessageUploaded"/>
+                <NewVideoMessageButton @message-uploaded="handleMessageUploaded"/>
+            </div>
+            <Gallery id="galleryButton"/>
+        </section>
+
+        <!-- old messages -->
+        <section class="oldMessages" v-if="loaded" >
+            <div v-for="message in messages" :class="message.from === currentUsername ?  sentClass : receivedClass">
+                <p id="messageUser">{{ message.from }}</p>
+                <audio controls v-if="message.messageType === 'Audio'" type="audio/mpeg" :src="message.message"> {{ message.message }}</audio> 
+                <iframe v-if="message.messageType === 'Video'" :src="message.message" width="420" height="315"></iframe>
+            </div>
+            
+        </section>
+
+        <p v-else-if="!props.user2" class="notReady">No chat selected</p>
+        <p v-else class="notReady">Loading...</p>
+
         
-    </section>
-
-    <p v-else-if="!props.user2" class="notReady">No chat selected</p>
-    <p v-else class="notReady">Loading...</p>
-
-    <!-- send a new message -->
-    <section class="messageInput" v-if="props.user2">
-        <div class="messageButtonInputs">
-            <NewAudioMessageButton @message-uploaded="handleMessageUploaded"/>
-            <NewVideoMessageButton @message-uploaded="handleMessageUploaded"/>
-        </div>
-        <Gallery id="galleryButton"/>
-    </section>
+    </div>
 </template>
 
 <style scoped>
+
+.bottomPart {
+    width: 100%;
+    height: 90%;
+    display: flex;
+}
 .usernameHeader {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 99%;
     border-bottom: 1px solid lightgray;
     margin: 0;
+    margin-left: 4px;
+    height: 10%;
 }
 
 .oldMessages {
@@ -109,6 +121,8 @@ onUnmounted(() => {
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: scroll;
+    width: 90%;
+    max-height: 100%;
 }
 .sent {
     color: blue;
@@ -126,15 +140,19 @@ onUnmounted(() => {
 }
 .messageInput {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    border-top: 1px solid lightgray;
+    border-right: 1px solid lightgray;
     padding: 8px;
+    width: 10%;
+    max-height: 100%;
+    background-color: beige;
 }
 
 .messageButtonInputs {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     margin: auto;
 }

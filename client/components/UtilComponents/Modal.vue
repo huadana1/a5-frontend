@@ -79,7 +79,7 @@ async function close() {
     overflow-x: auto;
     display: flex;
     flex-direction: column;
-    width: 80vw;
+    width: 75vw;
     height: 70vh;
     z-index: 100;
   }

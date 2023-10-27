@@ -108,7 +108,7 @@ main {
 
 .right-panel {
   margin: 0;
-  padding: 8px;
+  padding: 0px;
   width: 75vw;
   height: 100vh;
   box-sizing: border-box;
