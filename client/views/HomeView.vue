@@ -83,7 +83,7 @@ main {
   margin: 0;
   padding: 8px;
   width: 25vw;
-  min-height: 100vh;
+  height: 100vh;
   box-sizing: border-box;
 
   display: flex;
@@ -102,8 +102,9 @@ main {
 }
 
 .chats {
-  height: 80%;
+  height: 70%;
   width: 100%;
+  overflow-y: auto;
 }
 
 .right-panel {
